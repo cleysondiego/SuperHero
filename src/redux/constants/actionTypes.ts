@@ -1,0 +1,8 @@
+const ACTION_TYPES = {
+  HEROES: {
+    LOAD_HEROES: 'LOAD_HEROES',
+    ADD_HEROES: 'ADD_HEROES'
+  }
+};
+
+export { ACTION_TYPES };
