@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, TouchableOpacity, SafeAreaView, Text, View, FlatList, Image } from "react-native";
+import { ActivityIndicator, TouchableOpacity, SafeAreaView, Text, View, FlatList, Image, Button } from "react-native";
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,6 +10,7 @@ import { IHero } from '../../types/IHero';
 import { IStackParamList } from '../../types/IStackParamList';
 
 import styles from './styles';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface IProps {
   loadHeroes: () => void;
@@ -22,7 +23,7 @@ type IDetailsNavigation = StackNavigationProp<IStackParamList, 'Details'>;
 const mapStateToProps = (state: any) => {
   return {
     heroes: state.heroes.heroes as IHero[],
-    isLoading: state.heroes.isLoading
+    isLoading: state.heroes.isLoading as boolean
   };
 }
 
@@ -43,28 +44,39 @@ function Heroes({ heroes, isLoading, loadHeroes }: IProps) {
         </View>
       )}
 
-      <FlatList
-        data={heroes}
-        renderItem={({ item }) => {
-          const uri = `${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`;
-          return (
-            <View style={styles.itemContainer}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Details', { hero: item })}
-                activeOpacity={0.5}
-              >
-                <Image
-                  source={{ uri }}
-                  style={styles.heroImage}
-                  />
-              </TouchableOpacity>
-              <Text>{item.name}</Text>
-            </View>
-          );
-        }}
-        numColumns={2}
-        keyExtractor={(item) => String(item.id)}
-      />
+      {heroes.length > 0 &&
+        <View style={styles.contentContainer}>
+          <RectButton
+            style={styles.searchHero}
+            onPress={() => navigation.navigate('SearchHero')}
+          >
+            <Text style={styles.searchHeroButtonText}>Find my hero</Text>
+          </RectButton>
+
+          <FlatList
+            data={heroes}
+            renderItem={({ item }) => {
+              const uri = `${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`;
+              return (
+                <View style={styles.itemContainer}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Details', { hero: item })}
+                    activeOpacity={0.5}
+                  >
+                    <Image
+                      source={{ uri }}
+                      style={styles.heroImage}
+                      />
+                  </TouchableOpacity>
+                  <Text>{item.name}</Text>
+                </View>
+              );
+            }}
+            numColumns={2}
+            keyExtractor={(item) => String(item.id)}
+          />
+        </View>
+      }
     </SafeAreaView>
   )
 }

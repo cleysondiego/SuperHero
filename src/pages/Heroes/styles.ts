@@ -22,6 +22,24 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  searchHero: {
+    marginTop: 16,
+    marginBottom: 16,
+    height: 60,
+    width: 120,
+    borderRadius: 8,
+    backgroundColor: '#ff0000',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchHeroButtonText: {
+    color: '#fff',
+    fontSize: 16
   }
 });
 

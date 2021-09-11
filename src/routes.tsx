@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Heroes from './pages/Heroes';
 import Details from './pages/Details';
 import Favorites from './pages/Favorites';
+import SearchHero from './pages/SearchHero';
 import { IStackParamList } from './types/IStackParamList';
 
 const Tab = createBottomTabNavigator();
@@ -18,6 +19,7 @@ function HeroesStackScreen() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Home' component={Heroes} />
       <Stack.Screen name='Details' component={Details} />
+      <Stack.Screen name='SearchHero' component={SearchHero} />
     </Stack.Navigator>
   )
 }
