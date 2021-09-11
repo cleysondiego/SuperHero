@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, ActivityIndicator, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Text, ActivityIndicator } from 'react-native';
 
-import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RectButton } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 import { IHero } from '../../types/IHero';
-import { IStackParamList } from '../../types/IStackParamList';
 import { searchHeroes } from '../../redux/actions/searchHeroes';
+import { addFavoriteHero } from '../../redux/actions/heroes';
+import CharactersList from '../../components/CharactersList';
 
 import styles from './styles';
 
 interface IProps {
   searchHeroes: (name: string) => void;
+  addFavoriteHero: (hero: IHero) => void;
   heroes: IHero[];
   isLoading: boolean;
 }
-
-type IDetailsNavigation = StackNavigationProp<IStackParamList, 'Details'>;
 
 const mapStateToProps = (state: any) => {
   return {
@@ -27,9 +25,7 @@ const mapStateToProps = (state: any) => {
   };
 }
 
-function SearchHero({ heroes, isLoading, searchHeroes }: IProps) {
-  const navigation = useNavigation<IDetailsNavigation>();
-
+function SearchHero({ heroes, isLoading, searchHeroes, addFavoriteHero }: IProps) {
   const [name, setName] = useState('');
   const [lastSearch, setLastSearch] = useState('');
 
@@ -38,6 +34,10 @@ function SearchHero({ heroes, isLoading, searchHeroes }: IProps) {
     if (name === lastSearch) return;
     setLastSearch(name);
     searchHeroes(name);
+  }
+
+  function handleFavoriteHero(hero: IHero) {
+    addFavoriteHero(hero);
   }
 
   return (
@@ -53,7 +53,7 @@ function SearchHero({ heroes, isLoading, searchHeroes }: IProps) {
         style={styles.searchHero}
         onPress={handleSearch}
       >
-        <Text style={styles.searchHeroButtonText}>Find my hero</Text>
+        <Text style={styles.searchHeroButtonText}>Search</Text>
       </RectButton>
 
       {isLoading && (
@@ -64,32 +64,11 @@ function SearchHero({ heroes, isLoading, searchHeroes }: IProps) {
         </View>
       )}
 
-      {heroes.length > 0 && 
-        <FlatList
-          data={heroes}
-          renderItem={({ item }) => {
-            const uri = `${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`;
-            return (
-              <View style={styles.itemContainer}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Details', { hero: item })}
-                  activeOpacity={0.5}
-                >
-                  <Image
-                    source={{ uri }}
-                    style={styles.heroImage}
-                  />
-                </TouchableOpacity>
-                <Text>{item.name}</Text>
-              </View>
-            );
-          }}
-          numColumns={2}
-          keyExtractor={(item) => String(item.id)}
-        />
+      {heroes.length > 0 &&
+        <CharactersList heroesList={heroes} handleFavoriteHero={handleFavoriteHero} />
       }
     </View>
   );
 }
 
-export default connect(mapStateToProps, { searchHeroes })(SearchHero);
+export default connect(mapStateToProps, { searchHeroes, addFavoriteHero })(SearchHero);

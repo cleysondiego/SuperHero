@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, TouchableOpacity, SafeAreaView, Text, View, FlatList, Image } from "react-native";
+import { ActivityIndicator, SafeAreaView, Text, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { RectButton } from 'react-native-gesture-handler';
 
-import { loadHeroes } from '../../redux/actions/heroes';
+import { loadHeroes, addFavoriteHero } from '../../redux/actions/heroes';
 import { IHero } from '../../types/IHero';
 import { IStackParamList } from '../../types/IStackParamList';
+import CharactersList from '../../components/CharactersList';
 
 import styles from './styles';
 
 interface IProps {
   loadHeroes: () => void;
+  addFavoriteHero: (hero: IHero) => void;
   heroes: IHero[];
   isLoading: boolean;
 }
 
-type IDetailsNavigation = StackNavigationProp<IStackParamList, 'Details'>;
+type INavigationProps = StackNavigationProp<IStackParamList>;
 
 const mapStateToProps = (state: any) => {
   return {
@@ -27,12 +29,16 @@ const mapStateToProps = (state: any) => {
   };
 }
 
-function Heroes({ heroes, isLoading, loadHeroes }: IProps) {
-  const navigation = useNavigation<IDetailsNavigation>();
+function Heroes({ heroes, isLoading, loadHeroes, addFavoriteHero }: IProps) {
+  const navigation = useNavigation<INavigationProps>();
 
   useEffect(() => {
     loadHeroes();
   }, []);
+
+  function handleFavoriteHero(hero: IHero) {
+    addFavoriteHero(hero);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,32 +59,11 @@ function Heroes({ heroes, isLoading, loadHeroes }: IProps) {
             <Text style={styles.searchHeroButtonText}>Find my hero</Text>
           </RectButton>
 
-          <FlatList
-            data={heroes}
-            renderItem={({ item }) => {
-              const uri = `${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`;
-              return (
-                <View style={styles.itemContainer}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Details', { hero: item })}
-                    activeOpacity={0.5}
-                  >
-                    <Image
-                      source={{ uri }}
-                      style={styles.heroImage}
-                      />
-                  </TouchableOpacity>
-                  <Text>{item.name}</Text>
-                </View>
-              );
-            }}
-            numColumns={2}
-            keyExtractor={(item) => String(item.id)}
-          />
+          <CharactersList heroesList={heroes} handleFavoriteHero={handleFavoriteHero} />
         </View>
       }
     </SafeAreaView>
   )
 }
 
-export default connect(mapStateToProps, { loadHeroes })(Heroes);
+export default connect(mapStateToProps, { loadHeroes, addFavoriteHero })(Heroes);
