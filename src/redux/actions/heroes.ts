@@ -23,3 +23,17 @@ export const addHeroes = (heroes: IHero[]) => (
     payload: heroes
   }
 );
+
+export const addFavoriteHero = (hero: IHero) => (
+  {
+    type: ACTION_TYPES.HEROES.ADD_FAVORITE_HERO,
+    payload: hero,
+  }
+);
+
+export const removeFavoriteHero = (hero: IHero) => (
+  {
+    type: ACTION_TYPES.HEROES.REMOVE_FAVORITE_HERO,
+    payload: hero,
+  }
+)
