@@ -13,8 +13,6 @@ function Details({ route }: IProps) {
   const { hero } = route.params;
   const uri = `${hero.thumbnail.path}/landscape_incredible.${hero.thumbnail.extension}`;
 
-  console.log(uri);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
