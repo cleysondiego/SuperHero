@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, TouchableOpacity, SafeAreaView, Text, View, FlatList, Image, Button } from "react-native";
+import { ActivityIndicator, TouchableOpacity, SafeAreaView, Text, View, FlatList, Image } from "react-native";
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { connect } from 'react-redux';
+import { RectButton } from 'react-native-gesture-handler';
 
 import { loadHeroes } from '../../redux/actions/heroes';
 import { IHero } from '../../types/IHero';
 import { IStackParamList } from '../../types/IStackParamList';
 
 import styles from './styles';
-import { RectButton } from 'react-native-gesture-handler';
 
 interface IProps {
   loadHeroes: () => void;
