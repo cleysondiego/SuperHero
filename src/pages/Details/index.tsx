@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
 import { IStackParamList } from '../../types/IStackParamList';

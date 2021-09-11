@@ -1,5 +1,5 @@
-import { IHero } from "../../types/IHero";
-import { ACTION_TYPES } from "../constants/actionTypes";
+import { IHero } from '../../types/IHero';
+import { ACTION_TYPES } from '../constants/actionTypes';
 
 const initialState = {
   isLoading: false,
