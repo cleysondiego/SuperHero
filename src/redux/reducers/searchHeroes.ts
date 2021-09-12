@@ -3,7 +3,8 @@ import { ACTION_TYPES } from '../constants/actionTypes';
 
 const initialState = {
   isSearching: false,
-  heroes: [] as IHero[]
+  heroes: [] as IHero[],
+  lastSearch: ''
 }
 
 export default (state = initialState, action: any) => {
@@ -11,13 +12,15 @@ export default (state = initialState, action: any) => {
     case ACTION_TYPES.HEROES.SEARCH_HEROES:
       return {
         heroes: [] as IHero[],
-        isLoading: true
+        isLoading: true,
+        lastSearch: action.payload.name
       };
 
     case ACTION_TYPES.HEROES.RESULT_HEROES:
       const heroesList = action.payload;
 
       return {
+        ... state,
         isLoading: false,
         heroes: heroesList
       };

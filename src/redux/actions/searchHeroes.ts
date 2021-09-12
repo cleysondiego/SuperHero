@@ -7,7 +7,12 @@ import { AppDispatch } from '../store';
 export const searchHeroes = (name: string) => {
   return async (dispatch: AppDispatch) => {
     try {
-      dispatch({ type: ACTION_TYPES.HEROES.SEARCH_HEROES });
+      dispatch({
+        type: ACTION_TYPES.HEROES.SEARCH_HEROES,
+        payload: {
+          name
+        }
+      });
       const response = await api.get<IMarvelApiResponse>('/characters', { params: { nameStartsWith: name }});
 
       dispatch(resultHeroes(response.data.data.results));

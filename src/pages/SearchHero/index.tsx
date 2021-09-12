@@ -16,23 +16,22 @@ interface IProps {
   addFavoriteHero: (hero: IHero) => void;
   heroes: IHero[];
   isLoading: boolean;
+  lastSearch: String;
 }
 
 const mapStateToProps = (state: any) => {
   return {
     heroes: state.searchHeroes.heroes as IHero[],
-    isLoading: state.searchHeroes.isLoading as boolean
+    isLoading: state.searchHeroes.isLoading as boolean,
+    lastSearch: state.searchHeroes.lastSearch as String
   };
 }
 
-function SearchHero({ heroes, isLoading, searchHeroes, addFavoriteHero }: IProps) {
+function SearchHero({ heroes, isLoading, lastSearch, searchHeroes, addFavoriteHero }: IProps) {
   const [name, setName] = useState('');
-  const [lastSearch, setLastSearch] = useState('');
 
   function handleSearch() {
-    if (isLoading) return;
-    if (name === lastSearch) return;
-    setLastSearch(name);
+    if (isLoading || name === lastSearch || !name) return;
     searchHeroes(name);
   }
 
