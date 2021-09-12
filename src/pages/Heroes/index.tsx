@@ -18,6 +18,7 @@ interface IProps {
   addFavoriteHero: (hero: IHero) => void;
   heroes: IHero[];
   isLoading: boolean;
+  hasError: boolean;
 }
 
 type INavigationProps = StackNavigationProp<IStackParamList>;
@@ -25,11 +26,12 @@ type INavigationProps = StackNavigationProp<IStackParamList>;
 const mapStateToProps = (state: any) => {
   return {
     heroes: state.heroes.heroes as IHero[],
-    isLoading: state.heroes.isLoading as boolean
+    isLoading: state.heroes.isLoading as boolean,
+    hasError: state.heroes.hasError as boolean,
   };
 }
 
-function Heroes({ heroes, isLoading, loadHeroes, addFavoriteHero }: IProps) {
+function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IProps) {
   const navigation = useNavigation<INavigationProps>();
 
   useEffect(() => {
@@ -50,18 +52,31 @@ function Heroes({ heroes, isLoading, loadHeroes, addFavoriteHero }: IProps) {
         </View>
       )}
 
-      {heroes.length > 0 &&
+      {heroes.length > 0 && (
         <View style={styles.contentContainer}>
           <RectButton
-            style={styles.searchHero}
+            style={styles.button}
             onPress={() => navigation.navigate('SearchHero')}
           >
-            <Text style={styles.searchHeroButtonText}>Find my hero</Text>
+            <Text style={styles.text}>Find my superhero</Text>
           </RectButton>
 
           <CharactersList heroesList={heroes} handleFavoriteHero={handleFavoriteHero} />
         </View>
-      }
+      )}
+
+      {hasError && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.textError}>Unable to get the superheroes.</Text>
+          <Text style={styles.textError}>Make sure do you have network access.</Text>
+          <RectButton
+            style={styles.button}
+            onPress={() => loadHeroes()}
+          >
+            <Text style={styles.text}>Try again!</Text>
+          </RectButton>
+        </View>
+      )}
     </SafeAreaView>
   )
 }

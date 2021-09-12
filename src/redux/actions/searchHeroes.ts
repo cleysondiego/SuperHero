@@ -1,8 +1,23 @@
+import { Alert } from 'react-native';
 import { api } from '../../services/api';
 import { IHero } from '../../types/IHero';
 import { IMarvelApiResponse } from '../../types/IMarvelApiResponse';
 import { ACTION_TYPES } from '../constants/actionTypes';
 import { AppDispatch } from '../store';
+
+const showAlert = () => Alert.alert(
+  'Error',
+  'An error occurred during search. Please, try again!',
+  [
+    {
+      text: 'Cancel',
+      style: 'cancel'
+    }
+  ],
+  {
+    cancelable: true,
+  }
+);
 
 export const searchHeroes = (name: string) => {
   return async (dispatch: AppDispatch) => {
@@ -17,7 +32,7 @@ export const searchHeroes = (name: string) => {
 
       dispatch(resultHeroes(response.data.data.results));
     } catch(error) {
-      console.error(error);
+      showAlert();
     }
   }
 }

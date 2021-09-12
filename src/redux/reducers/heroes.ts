@@ -3,7 +3,8 @@ import { ACTION_TYPES } from '../constants/actionTypes';
 
 const initialState = {
   isLoading: false,
-  heroes: [] as IHero[]
+  heroes: [] as IHero[],
+  hasError: false,
 };
 
 export default (state = initialState, action: any) => {
@@ -26,8 +27,16 @@ export default (state = initialState, action: any) => {
 
       return {
         isLoading: false,
-        heroes: heroesList
+        heroes: heroesList,
+        hasError: false,
       };
+
+      case ACTION_TYPES.HEROES.LOAD_HEROES_ERROR:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true,
+        };
 
     default:
       return state;

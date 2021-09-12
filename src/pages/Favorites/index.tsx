@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Share, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, SafeAreaView, Share, Text, TouchableOpacity, View } from 'react-native';
 
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
@@ -31,9 +31,23 @@ function Favorites({ favoriteHeroes, removeFavoriteHero }: IProps) {
         message: `My favorites superheroes:${heroesName}`
       });
     } catch(error) {
-      console.error(error);
+      showAlert();
     }
   }
+
+  const showAlert = () => Alert.alert(
+    'Error',
+    'An error occurred while trying share. Please, try again!',
+    [
+      {
+        text: 'Cancel',
+        style: 'cancel'
+      }
+    ],
+    {
+      cancelable: true,
+    }
+  );
 
   return (
     <SafeAreaView style={styles.container}>

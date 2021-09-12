@@ -43,7 +43,7 @@ function SearchHero({ heroes, isLoading, lastSearch, searchHeroes, addFavoriteHe
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder='Enter a character name'
+        placeholder='Enter a superhero name'
         value={name}
         onChangeText={setName}
       />

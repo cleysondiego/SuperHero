@@ -12,7 +12,7 @@ export const loadHeroes = () => {
 
       dispatch(addHeroes(response.data.data.results));
     } catch(error) {
-      console.error(error);
+      dispatch({ type: ACTION_TYPES.HEROES.LOAD_HEROES_ERROR });
     }
   }
 }

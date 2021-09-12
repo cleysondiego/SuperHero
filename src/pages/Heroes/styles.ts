@@ -15,20 +15,29 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
   },
-  searchHero: {
+  button: {
     marginTop: 16,
     marginBottom: 16,
     height: 60,
-    width: 120,
+    width: 150,
     borderRadius: 8,
     backgroundColor: '#ff0000',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  searchHeroButtonText: {
+  text: {
     color: '#fff',
     fontSize: 16
+  },
+  textError: {
+    color: '#000',
+    fontSize: 16
+  },
+  errorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
