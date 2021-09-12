@@ -17,7 +17,8 @@ interface IProps extends StackScreenProps<IStackParamList, 'Details'> {
 
 function Details({ route, addFavoriteHero }: IProps) {
   const { hero } = route.params;
-  const uri = `${hero.thumbnail.path}/landscape_incredible.${hero.thumbnail.extension}`;
+  const updatedURL = hero.thumbnail.path.replace(/^http:\/\//i, 'https://');
+  const uri = `${updatedURL}/landscape_incredible.${hero.thumbnail.extension}`;
 
   return (
     <SafeAreaView style={styles.container}>

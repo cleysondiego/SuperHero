@@ -7,9 +7,10 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 40,
+    marginHorizontal: 16,
     height: 60,
-    width: '100%',
     paddingHorizontal: 20,
+    color: '#000',
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 8,

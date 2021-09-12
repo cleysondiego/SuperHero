@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -24,7 +24,8 @@ function CharactersList({ heroesList, handleFavoriteHero }: IProps) {
     <FlatList
       data={heroesList}
       renderItem={({ item }) => {
-        const uri = `${item.thumbnail.path}/standard_large.${item.thumbnail.extension}`;
+        const updatedURL = item.thumbnail.path.replace(/^http:\/\//i, 'https://');
+        const uri = `${updatedURL}/standard_large.${item.thumbnail.extension}`;
         return (
           <View style={styles.itemContainer}>
             <TouchableOpacity onPress={() => handleFavoriteHero(item)}>

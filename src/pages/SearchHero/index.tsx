@@ -44,6 +44,7 @@ function SearchHero({ heroes, isLoading, lastSearch, searchHeroes, addFavoriteHe
       <TextInput
         style={styles.input}
         placeholder='Enter a superhero name'
+        placeholderTextColor='black'
         value={name}
         onChangeText={setName}
       />

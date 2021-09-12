@@ -14,12 +14,14 @@ export default (state = initialState, action: any) => {
         return {
           ...state,
           isLoading: false,
+          hasError: false
         };
       }
 
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        hasError: false
       };
 
     case ACTION_TYPES.HEROES.ADD_HEROES:
