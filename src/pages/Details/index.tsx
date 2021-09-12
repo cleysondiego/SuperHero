@@ -26,7 +26,7 @@ function Details({ route, addFavoriteHero }: IProps) {
       </View>
       <View style={styles.marginContainer}>
         <TouchableOpacity onPress={() => addFavoriteHero(hero)}>
-          <Icon name='star' size={16} />
+          <Icon name='star' size={24} />
         </TouchableOpacity>
         <Text style={styles.heroName}>{hero.name}</Text>
         <Text style={styles.descriptionText}>{hero.description ? hero.description : 'Description not available'}</Text>
