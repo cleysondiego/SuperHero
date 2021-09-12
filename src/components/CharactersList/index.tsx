@@ -28,7 +28,7 @@ function CharactersList({ heroesList, handleFavoriteHero }: IProps) {
         return (
           <View style={styles.itemContainer}>
             <TouchableOpacity onPress={() => handleFavoriteHero(item)}>
-              <Icon name='star' size={16} />
+              <Icon name='star' size={24} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('Details', { hero: item })}
