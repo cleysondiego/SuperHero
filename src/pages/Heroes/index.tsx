@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, SafeAreaView, Text, View } from 'react-native';
+import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { RectButton } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Feather';
 
 import { loadHeroes, addFavoriteHero } from '../../redux/actions/heroes';
+import { incrementPage, decrementPage } from '../../redux/actions/pages';
 import { IHero } from '../../types/IHero';
 import { IStackParamList } from '../../types/IStackParamList';
 import CharactersList from '../../components/CharactersList';
@@ -14,11 +16,16 @@ import CharactersList from '../../components/CharactersList';
 import styles from './styles';
 
 interface IProps {
-  loadHeroes: () => void;
+  loadHeroes: (offset: number) => void;
   addFavoriteHero: (hero: IHero) => void;
+  incrementPage: () => void;
+  decrementPage: () => void;
   heroes: IHero[];
   isLoading: boolean;
   hasError: boolean;
+  previousPage: number;
+  currentPage: number;
+  nextPage: number;
 }
 
 type INavigationProps = StackNavigationProp<IStackParamList>;
@@ -28,18 +35,43 @@ const mapStateToProps = (state: any) => {
     heroes: state.heroes.heroes as IHero[],
     isLoading: state.heroes.isLoading as boolean,
     hasError: state.heroes.hasError as boolean,
+    previousPage: state.pages.previousPage as number,
+    currentPage: state.pages.currentPage as number,
+    nextPage: state.pages.nextPage as number
   };
 }
 
-function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IProps) {
+function Heroes({
+  heroes,
+  isLoading,
+  hasError,
+  loadHeroes,
+  addFavoriteHero,
+  incrementPage,
+  decrementPage,
+  previousPage,
+  currentPage,
+  nextPage
+}: IProps) {
   const navigation = useNavigation<INavigationProps>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    loadHeroes();
+    loadHeroes(currentPage);
   }, []);
 
   function handleFavoriteHero(hero: IHero) {
     addFavoriteHero(hero);
+  }
+
+  function handleNextPage() {
+    loadHeroes(nextPage);
+    dispatch(incrementPage());
+  }
+
+  function handlePreviousPage() {
+    loadHeroes(previousPage);
+    dispatch(decrementPage());
   }
 
   return (
@@ -52,7 +84,7 @@ function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IP
         </View>
       )}
 
-      {heroes.length > 0 && (
+      {(heroes.length > 0 && !isLoading) && (
         <View style={styles.contentContainer}>
           <RectButton
             style={styles.button}
@@ -62,6 +94,22 @@ function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IP
           </RectButton>
 
           <CharactersList heroesList={heroes} handleFavoriteHero={handleFavoriteHero} />
+
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity onPress={handlePreviousPage}>
+              <Text style={styles.textButton}>
+                <Icon name='arrow-left' size={24} />
+                Previous
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleNextPage}>
+              <Text style={styles.textButton}>
+                Next
+                <Icon name='arrow-right' size={24} />
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
 
@@ -71,7 +119,7 @@ function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IP
           <Text style={styles.textError}>Make sure do you have network access.</Text>
           <RectButton
             style={styles.button}
-            onPress={() => loadHeroes()}
+            onPress={() => loadHeroes(currentPage)}
           >
             <Text style={styles.text}>Try again!</Text>
           </RectButton>
@@ -81,4 +129,12 @@ function Heroes({ heroes, isLoading, hasError, loadHeroes, addFavoriteHero }: IP
   )
 }
 
-export default connect(mapStateToProps, { loadHeroes, addFavoriteHero })(Heroes);
+export default connect(
+  mapStateToProps,
+  {
+    loadHeroes,
+    addFavoriteHero,
+    incrementPage,
+    decrementPage
+  }
+)(Heroes);
