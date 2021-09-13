@@ -9,8 +9,7 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "esnext",
-    "typeRoots": ["./src/types"]
+    "target": "esnext"
   },
   "exclude": [
     "node_modules",
