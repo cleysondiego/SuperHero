@@ -3,7 +3,7 @@ import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity, View } from 'r
 
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -54,7 +54,6 @@ function Heroes({
   nextPage
 }: IProps) {
   const navigation = useNavigation<INavigationProps>();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     loadHeroes(currentPage);
@@ -66,12 +65,13 @@ function Heroes({
 
   function handleNextPage() {
     loadHeroes(nextPage);
-    dispatch(incrementPage());
+    incrementPage();
   }
 
   function handlePreviousPage() {
+    if (previousPage === currentPage) return;
     loadHeroes(previousPage);
-    dispatch(decrementPage());
+    decrementPage();
   }
 
   return (

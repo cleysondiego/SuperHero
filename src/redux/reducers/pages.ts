@@ -14,7 +14,7 @@ export default (state = initialState, action: any) => {
         currentPage: state.currentPage + 20,
         nextPage: state.nextPage + 20,
       };
-    
+
     case ACTION_TYPES.PAGES.DECREMENT_PAGE:
       const previous = state.previousPage - 20 > 0 ? state.previousPage - 20 : 0;
       const current = state.currentPage - 20 >= 0 ? state.currentPage - 20 : 0;
