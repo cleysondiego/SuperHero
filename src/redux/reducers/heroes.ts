@@ -33,12 +33,12 @@ export default (state = initialState, action: any) => {
         hasError: false,
       };
 
-      case ACTION_TYPES.HEROES.LOAD_HEROES_ERROR:
-        return {
-          ...state,
-          isLoading: false,
-          hasError: true,
-        };
+    case ACTION_TYPES.HEROES.LOAD_HEROES_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        hasError: true,
+      };
 
     default:
       return state;

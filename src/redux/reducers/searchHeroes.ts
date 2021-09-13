@@ -12,7 +12,7 @@ export default (state = initialState, action: any) => {
     case ACTION_TYPES.HEROES.SEARCH_HEROES:
       return {
         heroes: [] as IHero[],
-        isLoading: true,
+        isSearching: true,
         lastSearch: action.payload.name
       };
 
@@ -20,8 +20,8 @@ export default (state = initialState, action: any) => {
       const heroesList = action.payload;
 
       return {
-        ... state,
-        isLoading: false,
+        ...state,
+        isSearching: false,
         heroes: heroesList
       };
 
