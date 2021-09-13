@@ -37,7 +37,7 @@ describe('favorite heroes reducer', () => {
     });
   });
 
-  it('not load heroes request when has heroes', () => {
+  it('load heroes request when has heroes', () => {
     let newState = {
       ...initialState,
       heroes: [hero]
@@ -46,7 +46,7 @@ describe('favorite heroes reducer', () => {
       type: ACTION_TYPES.HEROES.LOAD_HEROES,
     })).toEqual({
       ...newState,
-      isLoading: false
+      isLoading: true
     });
   });
 
