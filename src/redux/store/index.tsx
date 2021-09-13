@@ -11,7 +11,7 @@ const persistConfig = {
   key: 'SuperHeroes',
   storage: AsyncStorage,
   whitelist: ['favoriteHeroes'],
-  blacklist: ['heroes', 'searchHeroes'],
+  blacklist: ['heroes', 'searchHeroes', 'pages'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

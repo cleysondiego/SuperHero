@@ -38,6 +38,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    marginTop: 16,
+    marginBottom: 16,
+    height: 24,
+    justifyContent: 'space-evenly'
+  },
+  textButton: {
+    fontSize: 16,
+    color: '#000'
   }
 });
 

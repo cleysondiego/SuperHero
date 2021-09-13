@@ -10,14 +10,6 @@ const initialState = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case ACTION_TYPES.HEROES.LOAD_HEROES:
-      if (state.heroes.length != 0) {
-        return {
-          ...state,
-          isLoading: false,
-          hasError: false
-        };
-      }
-
       return {
         ...state,
         isLoading: true,

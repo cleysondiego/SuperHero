@@ -4,11 +4,15 @@ import { IMarvelApiResponse } from '../../types/IMarvelApiResponse';
 import { ACTION_TYPES } from '../constants/actionTypes';
 import { AppDispatch } from '../store';
 
-export const loadHeroes = () => {
+export const loadHeroes = (offset: number) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch({ type: ACTION_TYPES.HEROES.LOAD_HEROES });
-      const response = await api.get<IMarvelApiResponse>('/characters');
+      const response = await api.get<IMarvelApiResponse>('/characters', {
+        params: {
+          offset
+        }
+      });
 
       dispatch(addHeroes(response.data.data.results));
     } catch(error) {
@@ -36,4 +40,4 @@ export const removeFavoriteHero = (hero: IHero) => (
     type: ACTION_TYPES.HEROES.REMOVE_FAVORITE_HERO,
     payload: hero,
   }
-)
+);
